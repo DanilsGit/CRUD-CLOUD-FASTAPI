@@ -1,0 +1,16 @@
+# .gitignore
+
+# Excluir entornos virtuales y variables de entorno
+.venv/
+.env
+*.env
+
+# Excluir IDE/editor específico
+.idea/
+.vscode/
+
+# Cache
+__pycache__/
+
+# Pero NO excluir la carpeta de migraciones de Alembic
+# (alembic/ y alembic.ini deben versionarse)
