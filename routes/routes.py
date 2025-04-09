@@ -36,8 +36,28 @@ def update_event(id: int, event_data: EventUpdate, db: Session = Depends(get_db)
     event = db.query(Event).filter(Event.id == id).first()
     if event is None:
         raise HTTPException(status_code=404, detail="Event not found")
-    for key, value in event_data.model_dump().items():
+    
+    # Verificar si hay atributos faltantes
+    data_dict = event_data.model_dump(exclude_unset=True)
+    if not data_dict:
+        raise HTTPException(status_code=400, detail="No update data provided")
+    
+    # Identificar qué atributos faltan
+    missing_fields = []
+    for field in EventUpdate.model_fields.keys():
+        if field not in data_dict or data_dict[field] is None:
+            missing_fields.append(field)
+    
+    if missing_fields:
+        raise HTTPException(
+            status_code=400, 
+            detail=f"Missing attributes: {', '.join(missing_fields)}"
+        )
+    
+    # Actualizar el evento si todos los atributos están presentes
+    for key, value in data_dict.items():
         setattr(event, key, value)
+    
     db.commit()
     return event
 
