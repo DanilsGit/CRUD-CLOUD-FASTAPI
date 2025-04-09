@@ -14,7 +14,7 @@ def get_db():
 
 @router.post("/events/", response_model=EventResponse)
 def create_event(event: EventCreate, db: Session = Depends(get_db)):
-    db_event = Event(**event.dict())
+    db_event = Event(**event.model_dump())
     db.add(db_event)
     db.commit()
     db.refresh(db_event)
@@ -36,7 +36,7 @@ def update_event(id: int, event_data: EventUpdate, db: Session = Depends(get_db)
     event = db.query(Event).filter(Event.id == id).first()
     if event is None:
         raise HTTPException(status_code=404, detail="Event not found")
-    for key, value in event_data.dict().items():
+    for key, value in event_data.model_dump().items():
         setattr(event, key, value)
     db.commit()
     return event

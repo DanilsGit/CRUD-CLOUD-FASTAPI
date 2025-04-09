@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestor de Eventos</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Gestor de Eventos</h1>
+        
+        <div class="form-container">
+            <h2>Crear Evento</h2>
+            <form id="eventForm">
+                <input type="text" id="title" placeholder="Título" required>
+                <textarea id="description" placeholder="Descripción"></textarea>
+                <input type="text" id="location" placeholder="Ubicación" required>
+                <input type="datetime-local" id="start_time" required>
+                <input type="datetime-local" id="end_time" required>
+                <button type="submit">Guardar</button>
+            </form>
+        </div>
+
+        <div class="events-container">
+            <h2>Eventos</h2>
+            <div id="eventsList"></div>
+        </div>
+    </div>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>
