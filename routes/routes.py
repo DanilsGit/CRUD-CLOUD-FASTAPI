@@ -69,3 +69,10 @@ def delete_event(id: int, db: Session = Depends(get_db)):
     db.delete(event)
     db.commit()
     return {"message": "Event deleted"}
+
+# Delete all events
+@router.delete("/events/")
+def delete_all_events(db: Session = Depends(get_db)):
+    db.query(Event).delete()
+    db.commit()
+    return {"message": "All events deleted"}
